@@ -94,9 +94,9 @@ jobs:
           #  - then snapshot SAM_Revit year outputs separately
           $deps = @(
             'SAM'
-            'SAM_Systems'
             'SAM_Psychrometrics'
             'SAM_Mollier'
+            'SAM_Systems'
             'SAM_Windows'
             'SAM_IFC'
             'SAM_Topologic'
@@ -173,9 +173,9 @@ jobs:
 
           $orderedRepos = @(
             'SAM'
-            'SAM_Systems'
             'SAM_Psychrometrics'
             'SAM_Mollier'
+            'SAM_Systems'
             'SAM_Windows'
             'SAM_IFC'
             'SAM_Topologic'
