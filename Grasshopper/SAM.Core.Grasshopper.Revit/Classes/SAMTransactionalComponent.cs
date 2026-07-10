@@ -48,6 +48,16 @@ namespace SAM.Core.Grasshopper.Revit
 
         public abstract string LatestComponentVersion { get; }
 
+        public string MinCompatibleVersion => LatestComponentVersion;
+
+        public ObsoleteSeverity ObsoleteSeverity
+        {
+            get
+            {
+                return Grasshopper.Query.GetObsoleteSeverity(this);
+            }
+        }
+
         public override void AddedToDocument(GH_Document document)
         {
             base.AddedToDocument(document);
