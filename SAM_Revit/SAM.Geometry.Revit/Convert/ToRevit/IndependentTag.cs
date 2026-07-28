@@ -81,7 +81,7 @@ namespace SAM.Geometry.Revit
                 UV end = tag.End?.ToRevit();
                 if (end != null)
                 {
-                    result.SetLeaderEnd(new Reference(familySymbol), new XYZ(elbow.U, elbow.V, 0));
+                    result.SetLeaderEnd(new Reference(familySymbol), new XYZ(end.U, end.V, 0));
                 }
             }
 
