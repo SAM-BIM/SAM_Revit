@@ -2,6 +2,7 @@
   <PropertyGroup>
 	  <TargetFramework Condition="'$(Configuration)' == 'Debug2025' Or '$(Configuration)' == 'Release2025'">net8.0-windows</TargetFramework>
 	  <TargetFramework Condition="'$(Configuration)' == 'Debug2026' Or '$(Configuration)' == 'Release2026'">net8.0-windows</TargetFramework>
+	  <TargetFramework Condition="'$(Configuration)' == 'Debug2027' Or '$(Configuration)' == 'Release2027'">net10.0-windows</TargetFramework>
     <OutputType>Library</OutputType>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <AssemblyTitle>SAM_Revit</AssemblyTitle>
@@ -9,7 +10,7 @@
     <Copyright>Copyright (c) 2020-2026 Michal Dengusiak &amp; Jakub Ziolkowski and contributors</Copyright>
 	  <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
 	  <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
-	  <Configurations>Debug;Release;Debug2025;Release2025;Debug2026;Release2026</Configurations>
+	  <Configurations>Debug;Release;Debug2025;Release2025;Debug2026;Release2026;Debug2027;Release2027</Configurations>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <OutputPath>..\..\build\</OutputPath>
@@ -31,6 +32,14 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <WarningLevel>9999</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug2027|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\..\build\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;Revit2027</DefineConstants>
+    <DocumentationFile>..\..\build\SAM.Units.Revit.xml</DocumentationFile>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <WarningLevel>9999</WarningLevel>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release2025|AnyCPU'">
     <OutputPath>..\..\build\</OutputPath>
     <DefineConstants>TRACE;Revit2025</DefineConstants>
@@ -41,6 +50,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release2026|AnyCPU'">
     <OutputPath>..\..\build\</OutputPath>
     <DefineConstants>TRACE;Revit2026</DefineConstants>
+    <Optimize>true</Optimize>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <WarningLevel>9999</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release2027|AnyCPU'">
+    <OutputPath>..\..\build\</OutputPath>
+    <DefineConstants>TRACE;Revit2027</DefineConstants>
     <Optimize>true</Optimize>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <WarningLevel>9999</WarningLevel>
@@ -57,12 +73,24 @@
 		  <HintPath>$(SolutionDir)\references\Revit 2026\RevitAPI.dll</HintPath>
 		  <Private>False</Private>
 	  </Reference>
+	  <Reference Include="RevitAPI" Condition="'$(Configuration)' == 'Debug2027' Or '$(Configuration)' == 'Release2027'">
+		  <HintPath>$(SolutionDir)\references\Revit 2027\RevitAPI.dll</HintPath>
+		  <Private>False</Private>
+	  </Reference>
 	  <Reference Include="RevitAPIIFC" Condition="'$(Configuration)' == 'Debug2026' Or '$(Configuration)' == 'Release2026'">
 		  <HintPath>$(SolutionDir)\references\Revit 2026\RevitAPIIFC.dll</HintPath>
 		  <Private>False</Private>
 	  </Reference>
+	  <Reference Include="RevitAPIIFC" Condition="'$(Configuration)' == 'Debug2027' Or '$(Configuration)' == 'Release2027'">
+		  <HintPath>$(SolutionDir)\references\Revit 2027\RevitAPIIFC.dll</HintPath>
+		  <Private>False</Private>
+	  </Reference>
 	  <Reference Include="RevitAPIUI" Condition="'$(Configuration)' == 'Debug2026' Or '$(Configuration)' == 'Release2026'">
 		  <HintPath>$(SolutionDir)\references\Revit 2026\RevitAPIUI.dll</HintPath>
+		  <Private>False</Private>
+	  </Reference>	  
+	  <Reference Include="RevitAPIUI" Condition="'$(Configuration)' == 'Debug2027' Or '$(Configuration)' == 'Release2027'">
+		  <HintPath>$(SolutionDir)\references\Revit 2027\RevitAPIUI.dll</HintPath>
 		  <Private>False</Private>
 	  </Reference>	  
 	  <Reference Include="RevitAPI" Condition="'$(Configuration)' == 'Debug2025' Or '$(Configuration)' == 'Release2025'">

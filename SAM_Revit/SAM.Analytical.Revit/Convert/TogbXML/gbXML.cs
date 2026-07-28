@@ -87,7 +87,15 @@ namespace SAM.Analytical.Revit
                     energyAnalysisDetailModel = EnergyAnalysisDetailModel.Create(document, energyAnalysisDetailModelOptions);
 
                     GBXMLExportOptions gBXMLExportOptions = new GBXMLExportOptions();
+#if Revit2025 || Revit2026
+                    // GBXMLExportOptions.ExportEnergyModelType, and the ExportEnergyModelType enum it took,
+                    // were both removed from the Revit 2027 API - GBXMLExportOptions now exposes only
+                    // ExportAnalyticalSystems and ForceGbXMLExport. There is no direct replacement on the
+                    // options object; under 2027 the export follows EnergyDataSettings alone, which is
+                    // configured above. Whether that yields the same gbXML as this line did is a question for
+                    // a model comparison, not something the API can answer.
                     gBXMLExportOptions.ExportEnergyModelType = ExportEnergyModelType.SpatialElement;
+#endif
 
                     if (!document.Export(System.IO.Path.GetDirectoryName(path), System.IO.Path.GetFileName(path), gBXMLExportOptions))
                     {
