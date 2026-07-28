@@ -1,4 +1,6 @@
-﻿using Autodesk.Revit.DB;
+﻿// SPDX-License-Identifier: LGPL-3.0-or-later
+// Copyright (c) 2020-2026 Michal Dengusiak & Jakub Ziolkowski and contributors
+using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Mechanical;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,11 +35,7 @@ namespace SAM.Core.Revit
 
                 if(!allowDuplicates)
                 {
-#if Revit2017
-                    IList<ElementId> elementIds = null;
-#else
                     IList<ElementId> elementIds = space.GetDependentElements(new LogicalAndFilter( new ElementCategoryFilter(BuiltInCategory.OST_MEPSpaceTags), new ElementOwnerViewFilter(view.Id)));
-#endif
                     if (elementIds != null)
                     {
                         ElementId elementId_Temp = elementIds.ToList().Find(x => document.GetElement(x)?.GetTypeId() == elementId_SpaceTagType);

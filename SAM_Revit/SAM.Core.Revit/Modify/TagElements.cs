@@ -1,4 +1,6 @@
-﻿using Autodesk.Revit.DB;
+﻿// SPDX-License-Identifier: LGPL-3.0-or-later
+// Copyright (c) 2020-2026 Michal Dengusiak & Jakub Ziolkowski and contributors
+using Autodesk.Revit.DB;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -17,11 +19,7 @@ namespace SAM.Core.Revit
             if (familySymbol == null)
                 return null;
 
-#if Revit2017 || Revit2018 || Revit2019 || Revit2020 || Revit2021 || Revit2022 || Revit2023 || Revit2024
-            BuiltInCategory builtInCategory_Tag = (BuiltInCategory)familySymbol.Category.Id.IntegerValue;
-#else
             BuiltInCategory builtInCategory_Tag = (BuiltInCategory)familySymbol.Category.Id.Value;
-#endif
 
 
             if (!builtInCategory_Tag.IsValidTagCategory(builtInCategory))
@@ -45,11 +43,7 @@ namespace SAM.Core.Revit
             if (familySymbol == null)
                 return null;
 
-#if Revit2017 || Revit2018 || Revit2019 || Revit2020 || Revit2021 || Revit2022 || Revit2023 || Revit2024
-            BuiltInCategory builtInCategory_Tag = (BuiltInCategory)familySymbol.Category.Id.IntegerValue;
-#else
             BuiltInCategory builtInCategory_Tag = (BuiltInCategory)familySymbol.Category.Id.Value;
-#endif
 
 
             IEnumerable<ElementId> elementIds_View = new FilteredElementCollector(document, view.Id).ToElementIds();
@@ -74,11 +68,7 @@ namespace SAM.Core.Revit
 
                 if(!allowDuplicates)
                 {
-#if Revit2017
-                    IList<ElementId> elementIds_Tags = null;
-#else
                     IList<ElementId> elementIds_Tags = element.GetDependentElements(new LogicalAndFilter(new ElementClassFilter(typeof(IndependentTag)), new ElementOwnerViewFilter(view.Id)));
-#endif
 
                     if (elementIds_Tags != null && elementIds_Tags.Count != 0)
                     {
@@ -90,13 +80,8 @@ namespace SAM.Core.Revit
                     }
                 }
 
-#if Revit2017 || Revit2018 || Revit2019 || Revit2020 || Revit2021 || Revit2022 || Revit2023 || Revit2024
-                if (!builtInCategory_Tag.IsValidTagCategory((BuiltInCategory)element.Category.Id.IntegerValue))
-                    continue;
-#else
                 if (!builtInCategory_Tag.IsValidTagCategory((BuiltInCategory)element.Category.Id.Value))
                     continue;
-#endif
 
 
 
@@ -124,17 +109,8 @@ namespace SAM.Core.Revit
                 if (xyz == null)
                     continue;
 
-#if Revit2017
-                IndependentTag independentTag = document.Create.NewTag(view, element, addLeader, TagMode.TM_ADDBY_CATEGORY, tagOrientation, xyz);
-                independentTag?.ChangeTypeId(elementId_TagType);
-#elif Revit2018
-                Autodesk.Revit.DB.Reference reference = new Autodesk.Revit.DB.Reference(element);
-                IndependentTag independentTag = IndependentTag.Create(document, view.Id, reference, addLeader, TagMode.TM_ADDBY_CATEGORY, tagOrientation, xyz);
-                independentTag?.ChangeTypeId(elementId_TagType);
-#else
                 Autodesk.Revit.DB.Reference reference = new Autodesk.Revit.DB.Reference(element);
                 IndependentTag independentTag = IndependentTag.Create(document, elementId_TagType, view.Id, reference, addLeader, tagOrientation, xyz);
-#endif
 
                 if (independentTag != null)
                     result.Add(independentTag);

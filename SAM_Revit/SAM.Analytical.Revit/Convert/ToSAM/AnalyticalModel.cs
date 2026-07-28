@@ -1,4 +1,6 @@
-﻿using Autodesk.Revit.DB;
+﻿// SPDX-License-Identifier: LGPL-3.0-or-later
+// Copyright (c) 2020-2026 Michal Dengusiak & Jakub Ziolkowski and contributors
+using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Analysis;
 using SAM.Core;
 using SAM.Core.Revit;
@@ -38,11 +40,7 @@ namespace SAM.Analytical.Revit
             EnergyDataSettings energyDataSettings = EnergyDataSettings.GetFromDocument(document);
             energyDataSettings.ExportComplexity = gbXMLExportComplexity.ComplexWithMullionsAndShadingSurfaces;
             energyDataSettings.ExportDefaults = false;
-#if Revit2017 || Revit2018 || Revit2019 || Revit2020
-            energyDataSettings.SliverSpaceTolerance = UnitUtils.ConvertToInternalUnits(0.005, DisplayUnitType.DUT_METERS);
-#else
             energyDataSettings.SliverSpaceTolerance = UnitUtils.ConvertToInternalUnits(0.005, UnitTypeId.Meters);
-#endif
             energyDataSettings.AnalysisType = AnalysisMode.BuildingElements;
             energyDataSettings.EnergyModel = false;
 
