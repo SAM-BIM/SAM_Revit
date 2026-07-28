@@ -19,6 +19,12 @@ jobs:
       ORG_NAME: "SAM-BIM"
       REPO_NAME: "SAM_Revit"
       NUGET_XMLDOC_MODE: "skip"
+      # The native OCCT layer (vcpkg/OpenCASCADE) is not available on the runner, so
+      # skip build-native.ps1 and build SAM_OCCT's managed assemblies only. Mirrors
+      # SAM_OCCT's own build workflow. The Revit post-build steps that copy the native
+      # kernel are 'if exist' guarded, so the plug-in still links against the managed
+      # OCCT assemblies here; the shipped native binaries come from SAM_Deploy.
+      SAM_OCCT_SKIP_NATIVE_BUILD: "true"
 
     steps:
       - name: Checkout SAM_Revit
@@ -99,12 +105,17 @@ jobs:
             'SAM_Systems'
             'SAM_Windows'
             'SAM_IFC'
-            'SAM_Topologic'
             'SAM_BHom'
             'SAM_gbXML'
             'SAM_GEM'
             'SAM_LadybugTools'
             'SAM_Solver'          # private -> token needed
+            # SAM_Revit_UI (built at the end of this list) references
+            # SAM_OCCT\build\SAM.{Core,Geometry,Analytical}.OCCT.dll since the Revit
+            # topology conversion moved off Topologic, so SAM_OCCT must be cloned here
+            # too or SAM.Analytical.Revit.UI fails CS0103 on 'OCCT'. Must follow SAM and
+            # SAM_Solver - its only sibling dependencies.
+            'SAM_OCCT'
             'SAM_SolarCalculator'
             # Must precede SAM_Tas and SAM_OpenStudio: both benchmark producers reference
             # SAM_Validation\build\SAM.Analytical.Benchmark.dll by HintPath, and without it they fail
@@ -194,12 +205,16 @@ jobs:
             'SAM_Systems'
             'SAM_Windows'
             'SAM_IFC'
-            'SAM_Topologic'
             'SAM_BHom'
             'SAM_gbXML'
             'SAM_GEM'
             'SAM_LadybugTools'
             'SAM_Solver'
+            # Replaces SAM_Topologic: SAM.Analytical.Revit.UI references
+            # SAM_OCCT\build\SAM.{Core,Geometry,Analytical}.OCCT.dll by HintPath, so the
+            # managed OCCT assemblies must exist before the SAM_Revit_UI leg builds.
+            # Must follow SAM and SAM_Solver - its only sibling dependencies.
+            'SAM_OCCT'
             'SAM_SolarCalculator'
             # Must precede SAM_Tas and SAM_OpenStudio: both benchmark producers reference
             # SAM_Validation\build\SAM.Analytical.Benchmark.dll by HintPath, and without it they fail
