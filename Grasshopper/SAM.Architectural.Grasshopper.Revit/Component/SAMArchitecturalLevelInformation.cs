@@ -143,11 +143,7 @@ namespace SAM.Architectural.Grasshopper.Revit
             double elevation_High = double.NaN;
             if (level_High != null)
             {
-#if Revit2017 || Revit2018 || Revit2019 || Revit2020
-                elevation_High = UnitUtils.ConvertFromInternalUnits(level_High.Elevation, DisplayUnitType.DUT_METERS);
-#else
                 elevation_High = UnitUtils.ConvertFromInternalUnits(level_High.Elevation, UnitTypeId.Meters);
-#endif
 
             }
 
@@ -156,11 +152,7 @@ namespace SAM.Architectural.Grasshopper.Revit
             double elevation_Low = double.NaN;
             if (level_Low != null)
             {
-#if Revit2017 || Revit2018 || Revit2019 || Revit2020
-                elevation_Low = UnitUtils.ConvertFromInternalUnits(level_Low.Elevation, DisplayUnitType.DUT_METERS);
-#else
                 elevation_Low = UnitUtils.ConvertFromInternalUnits(level_Low.Elevation, UnitTypeId.Meters);
-#endif
 
             }
 
@@ -175,11 +167,7 @@ namespace SAM.Architectural.Grasshopper.Revit
             index = Params.IndexOfOutputParam("Elevation");
             if (index != -1)
             {
-#if Revit2017 || Revit2018 || Revit2019 || Revit2020
-                dataAccess.SetData(index, new GH_Number(UnitUtils.ConvertFromInternalUnits(level.Elevation, DisplayUnitType.DUT_METERS)));
-#else
                 dataAccess.SetData(index, new GH_Number(UnitUtils.ConvertFromInternalUnits(level.Elevation, UnitTypeId.Meters)));
-#endif
             }
 
             index = Params.IndexOfOutputParam("LowLevel");
