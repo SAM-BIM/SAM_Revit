@@ -46,39 +46,49 @@ namespace SAM.Core.Revit
             BuiltInCategory builtInCategory_Tag = (BuiltInCategory)familySymbol.Category.Id.Value;
 
 
-            IEnumerable<ElementId> elementIds_View = new FilteredElementCollector(document, view.Id).ToElementIds();
-            if (elementIds_View == null)
-                return null;
-
             List<IndependentTag> result = new List<IndependentTag>();
-            if (elementIds_View.Count() == 0)
+            if (elementIds == null)
                 return result;
+
+            HashSet<ElementId> elementIds_Input = new HashSet<ElementId>(elementIds);
+            elementIds_Input.Remove(null);
+            elementIds_Input.Remove(ElementId.InvalidElementId);
+            if (elementIds_Input.Count == 0)
+                return result;
+
+            ICollection<ElementId> elementIds_View = new FilteredElementCollector(document, view.Id).WhereElementIsNotElementType().WherePasses(new ElementIdSetFilter(elementIds_Input.ToList())).ToElementIds();
+            if (elementIds_View == null || elementIds_View.Count == 0)
+                return result;
+
+            HashSet<ElementId> elementIds_Tagged = null;
+            if (!allowDuplicates)
+            {
+                elementIds_Tagged = new HashSet<ElementId>();
+                foreach (IndependentTag independentTag_Existing in new FilteredElementCollector(document).OfCategory(builtInCategory_Tag).OfClass(typeof(IndependentTag)).Cast<IndependentTag>())
+                {
+                    if (independentTag_Existing.OwnerViewId != view.Id)
+                        continue;
+
+                    if (independentTag_Existing.GetTypeId() != elementId_TagType)
+                        continue;
+
+                    ICollection<ElementId> elementIds_Tagged_Temp = independentTag_Existing.GetTaggedLocalElementIds();
+                    if (elementIds_Tagged_Temp == null)
+                        continue;
+
+                    foreach (ElementId elementId_Tagged in elementIds_Tagged_Temp)
+                        elementIds_Tagged.Add(elementId_Tagged);
+                }
+            }
 
             foreach (ElementId elementId in elementIds_View)
             {
-                if (elementId == null || elementId == ElementId.InvalidElementId)
-                    continue;
-
-                if (!elementIds.Contains(elementId))
-                    continue;
-
                 Element element = document.GetElement(elementId);
                 if (element == null)
                     continue;
 
-                if(!allowDuplicates)
-                {
-                    IList<ElementId> elementIds_Tags = element.GetDependentElements(new LogicalAndFilter(new ElementClassFilter(typeof(IndependentTag)), new ElementOwnerViewFilter(view.Id)));
-
-                    if (elementIds_Tags != null && elementIds_Tags.Count != 0)
-                    {
-                        ElementId elementId_Tag = elementIds_Tags.ToList().Find(x => document.GetElement(x).GetTypeId() == elementId_TagType);
-                        if(elementId_Tag != null)
-                        {
-                            continue;
-                        }
-                    }
-                }
+                if (!allowDuplicates && elementIds_Tagged.Contains(elementId))
+                    continue;
 
                 if (!builtInCategory_Tag.IsValidTagCategory((BuiltInCategory)element.Category.Id.Value))
                     continue;
