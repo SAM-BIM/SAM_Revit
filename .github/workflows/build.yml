@@ -120,7 +120,7 @@ jobs:
             'SAM_SolarCalculator'
             # Must precede SAM_Tas and SAM_OpenStudio: both benchmark producers reference
             # SAM_Validation\build\SAM.Analytical.Benchmark.dll by HintPath, and without it they fail
-            # CS0234. Same slot as BuildAlls_v3.csproj uses locally. Needs only SAM and SAM_Mollier,
+            # CS0234. Same slot as BuildAlls_v4.csproj uses locally. Needs only SAM and SAM_Mollier,
             # both already above.
             'SAM_Validation'
             'SAM_Tas'
@@ -219,7 +219,7 @@ jobs:
             'SAM_SolarCalculator'
             # Must precede SAM_Tas and SAM_OpenStudio: both benchmark producers reference
             # SAM_Validation\build\SAM.Analytical.Benchmark.dll by HintPath, and without it they fail
-            # CS0234. Same slot as BuildAlls_v3.csproj uses locally. Needs only SAM and SAM_Mollier,
+            # CS0234. Same slot as BuildAlls_v4.csproj uses locally. Needs only SAM and SAM_Mollier,
             # both already above.
             'SAM_Validation'
             'SAM_Tas'
