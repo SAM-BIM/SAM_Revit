@@ -64,11 +64,11 @@ namespace SAM.Core.Revit
             if (!allowDuplicates)
             {
                 elementIds_Tagged = new HashSet<ElementId>();
-                foreach (IndependentTag independentTag_Existing in new FilteredElementCollector(document).OfCategory(builtInCategory_Tag).OfClass(typeof(IndependentTag)).Cast<IndependentTag>())
+                // Owner-view filtered, not view-scoped: a tag hidden in the view must still suppress a
+                // duplicate. ElementOwnerViewFilter gives that same semantics natively, so Revit does the
+                // narrowing instead of this loop walking every tag in the document once per view.
+                foreach (IndependentTag independentTag_Existing in new FilteredElementCollector(document).OfCategory(builtInCategory_Tag).OfClass(typeof(IndependentTag)).WherePasses(new ElementOwnerViewFilter(view.Id)).Cast<IndependentTag>())
                 {
-                    if (independentTag_Existing.OwnerViewId != view.Id)
-                        continue;
-
                     if (independentTag_Existing.GetTypeId() != elementId_TagType)
                         continue;
 
