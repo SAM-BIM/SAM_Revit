@@ -51,6 +51,7 @@ namespace SAM.Core.Revit
                 return result;
 
             HashSet<ElementId> elementIds_Input = new HashSet<ElementId>(elementIds);
+            elementIds_Input.Remove(null);
             elementIds_Input.Remove(ElementId.InvalidElementId);
             if (elementIds_Input.Count == 0)
                 return result;
@@ -63,8 +64,11 @@ namespace SAM.Core.Revit
             if (!allowDuplicates)
             {
                 elementIds_Tagged = new HashSet<ElementId>();
-                foreach (IndependentTag independentTag_Existing in new FilteredElementCollector(document, view.Id).OfCategory(builtInCategory_Tag).OfClass(typeof(IndependentTag)).Cast<IndependentTag>())
+                foreach (IndependentTag independentTag_Existing in new FilteredElementCollector(document).OfCategory(builtInCategory_Tag).OfClass(typeof(IndependentTag)).Cast<IndependentTag>())
                 {
+                    if (independentTag_Existing.OwnerViewId != view.Id)
+                        continue;
+
                     if (independentTag_Existing.GetTypeId() != elementId_TagType)
                         continue;
 
