@@ -101,7 +101,7 @@ namespace SAM.Core.Grasshopper.Revit
     public class GooConvertSettingsParam : GH_PersistentParam<GooConvertSettings>
     {
         public override Guid ComponentGuid => new Guid("5af7e0dc-8d0c-4d51-8c85-6f2795c2fc37");
-        protected override System.Drawing.Bitmap Icon => Resources.SAM_Small;
+        protected override System.Drawing.Bitmap Icon => Resources.SAM_GH_Settings;
 
         public GooConvertSettingsParam()
             : base(typeof(GooConvertSettings).Name, typeof(GooConvertSettings).Name, typeof(GooConvertSettings).FullName.Replace(".", " "), "Params", "SAM")

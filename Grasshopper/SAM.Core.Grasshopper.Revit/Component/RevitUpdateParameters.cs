@@ -22,7 +22,7 @@ namespace SAM.Core.Grasshopper.Revit
         /// <summary>
         /// Provides an Icon for the component.
         /// </summary>
-        protected override System.Drawing.Bitmap Icon => Resources.SAM_Revit;
+        protected override System.Drawing.Bitmap Icon => Resources.SAM_GH_ValueUpdate;
 
         /// <summary>
         /// Initializes a new instance of the SAM_point3D class.
