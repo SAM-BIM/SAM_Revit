@@ -22,7 +22,7 @@ namespace SAM.Analytical.Grasshopper.Revit
         /// <summary>
         /// Provides an Icon for the component.
         /// </summary>
-        protected override System.Drawing.Bitmap Icon => Resources.SAM_Revit;
+        protected override System.Drawing.Bitmap Icon => Resources.SAM_GH_ZonePluralUpdate;
 
         public override GH_Exposure Exposure => GH_Exposure.tertiary | GH_Exposure.obscure;
 
