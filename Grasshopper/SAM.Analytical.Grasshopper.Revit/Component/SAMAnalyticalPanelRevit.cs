@@ -25,7 +25,7 @@ namespace SAM.Analytical.Grasshopper.Revit
         /// <summary>
         /// Provides an Icon for the component.
         /// </summary>
-        protected override System.Drawing.Bitmap Icon => Resources.SAM_Revit;
+        protected override System.Drawing.Bitmap Icon => Resources.SAM_GH_PanelExport;
 
         private List<Autodesk.Revit.DB.Wall> walls = new List<Autodesk.Revit.DB.Wall>();
         private bool run = false;
