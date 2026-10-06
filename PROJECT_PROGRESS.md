@@ -6,7 +6,7 @@
 
 ## Last updated
 
-2026-10-06 (Q4 bootstrap).
+2026-10-06 (Q4 operational cleanup).
 
 ## Current status
 
@@ -18,7 +18,7 @@ Not yet set by the owner. Record them here at the first Q4 planning pass. Known 
 
 ## Known carry-over work
 
-- **SAM Grasshopper icon redesign - PR #20** (`feature/sam-gh-icon-redesign`, open, base `sow/2026-Q3`). Known Q4 carry-over. Preserved untouched at bootstrap: not merged, not retargeted. The branch is based on Q3 history (5 commits unique to it vs `sow/2026-Q3`), and `sow/2026-Q3` is not an ancestor of `master`/`sow/2026-Q4`; retargeting needs an explicit rebase-onto decision (carry only its own commits, do not pull Q3 history into Q4).
+- **SAM Grasshopper icon redesign - PR #20** (`feature/sam-gh-icon-redesign` @ `fabe18af`, open, base `sow/2026-Q3`, not merged). Analysed 2026-10-06: the branch carries only its own 5 icon-only commits (`3820939`, `1d036db`, `b7a3568`, `9b4d3f1`, `fabe18a`) on top of Q3 commit `c82287af`. Those commits are not reachable from `sow/2026-Q4` (Q4 is built on the promoted `master` line), so a plain retarget would list 36 commits. Replaying exactly those commits onto `sow/2026-Q4` @ `88e7a6b9` is conflict-free (verified commit-by-commit with `git merge-tree`; identical to the net-diff merge). Planned action: rebase-onto Q4 as a new branch + PR, then close this one; owner-approved controlled task, not yet executed.
 
 ## Repository-specific next steps
 
@@ -43,6 +43,14 @@ Not yet set by the owner. Record them here at the first Q4 planning pass. Known 
 ## Next step
 
 - Owner to set Q4 priorities; then start the first Q4 task from this branch.
+
+## Q4 operational cleanup (2026-10-06)
+
+- Reviewed every active Q2/Q3 reference in this repository on `sow/2026-Q4` (workflow branch filters, dependency-branch resolution, `.gitmodules`/validation, docs). Historical Q2/Q3 mentions (feature documentation records, the frozen Q3 section below) are intentionally unchanged.
+- Changed (`88e7a6b`): replaced the hard-coded fallback list `['sow/2026-Q4', 'sow/2026-Q3', 'sow/2026-Q2']` in `.github/workflows/build.yml` with a lookup of the newest `sow/YYYY-Qn` branch each dependency has (explicit head/base/canonical-quarter candidates unchanged), so a Q4 build can never fall back to the frozen Q3/Q2 lines and the next quarter needs no edit here. Resolves to `sow/2026-Q4` today.
+- Checked, no action: the `github.repository_owner == 'SAM-BIM'` build guard (intentional; its comment names HoareLea only to explain why the guard exists), CODEOWNERS (SAM-BIM owners), and workflow secrets (no HoareLea-named secret). The local `upstream` (HoareLea) remote is preserved.
+- Carry-over: **SAM Grasshopper icon redesign - PR #20** (`feature/sam-gh-icon-redesign` @ `fabe18af`, open, base `sow/2026-Q3`, not merged). Analysed 2026-10-06: the branch carries only its own 5 icon-only commits (`3820939`, `1d036db`, `b7a3568`, `9b4d3f1`, `fabe18a`) on top of Q3 commit `c82287af`. Those commits are not reachable from `sow/2026-Q4` (Q4 is built on the promoted `master` line), so a plain retarget would list 36 commits. Replaying exactly those commits onto `sow/2026-Q4` @ `88e7a6b9` is conflict-free (verified commit-by-commit with `git merge-tree`; identical to the net-diff merge). Planned action: rebase-onto Q4 as a new branch + PR, then close this one; owner-approved controlled task, not yet executed.
+- Full cross-repository record, migration table and owner decisions: `SAM_Deploy:sow/2026-Q4` `PROJECT_PROGRESS.md`.
 
 ---
 
