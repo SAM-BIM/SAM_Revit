@@ -1,5 +1,14 @@
 # Project Progress - SAM_Revit (2026-Q4)
 
+## Q4 agent instructions rollout closeout - 2026-10-12
+
+- SAM-BIM/SAM_Revit#23 merged as `47dea38074577ad8ff51b72102f197ec9baa133a` (merge commit pinned to approved head `15276a192607f8ea3330ef9a130f309306376367`; base `sow/2026-Q4` `dacdf185fd4b6f27fd9c8c24d41338c32df6f493`; validated content `57f0503459a104d5160e781e749fd88cc9c4b233`). Owner-authorized 2026-10-12 after an independent review (`AGENT_ROLLOUT_REVIEW_2026-10-12.md`, local to the owner's workspace, not committed).
+- Docs only: AGENTS.md, CLAUDE.md, plus the rollout record `documentation/Agent-Continuity-Rollout-Q4.md`. No product code, build, workflow, dependency pin or tool changed; this closeout is the only `PROJECT_PROGRESS.md` change.
+- Validation: local documentation checks and commands are in `documentation/Agent-Continuity-Rollout-Q4.md` (`git diff --check`, file scope, UTF-8/LF/no BOM, import). Hosted checks at the approved head: build success (run 38258041550); spdx success (run 38258041554). Dependency selection: dependency clones in the build log: SAM @ sow/2026-Q4, SAM_BHom @ sow/2026-Q4, SAM_Excel @ sow/2026-Q4, SAM_gbXML @ sow/2026-Q4, SAM_GEM @ sow/2026-Q4, SAM_IFC @ sow/2026-Q4, SAM_LadybugTools @ sow/2026-Q4, SAM_Mollier @ sow/2026-Q4, SAM_Multitasker @ sow/2026-Q4, SAM_OCCT @ sow/2026-Q4, SAM_OpenStudio @ sow/2026-Q4, SAM_Psychrometrics @ sow/2026-Q4, SAM_Revit_UI @ docs/agent-instructions-rollout-q4, SAM_SolarCalculator @ sow/2026-Q4, SAM_Solver @ sow/2026-Q4, SAM_SQLite @ sow/2026-Q4, SAM_Systems @ sow/2026-Q4, SAM_Tas @ sow/2026-Q4, SAM_UI @ sow/2026-Q4, SAM_Validation @ sow/2026-Q4, SAM_Windows @ sow/2026-Q4 (explicitly accepted, unavoidable Revit/Revit_UI cycle: SAM_Revit_UI@docs/agent-instructions-rollout-q4).
+- Cleanup: remote docs/agent-instructions-rollout-q4 deleted with an expected-SHA lease on 15276a192607f8ea3330ef9a130f309306376367 after confirming it is contained in sow/2026-Q4 and no open PR uses it as head or base; the local branch and its worktree are preserved (worktree in use). Other branches, worktrees and the frozen quarters were not touched.
+- Remaining gaps: no agent-client behaviour or token benchmark has been run.
+- Exact next step: Continue from the shared `AGENTS.md`. Open item carried from the pilots: verify on each installed agent client, in a fresh Q4 session, that it follows the instructions without loading the full progress history, and record the result.
+
 ## Icon migration closeout — 2026-10-11
 
 - [SAM_Revit#22](https://github.com/SAM-BIM/SAM_Revit/pull/22) merged as `8016803d23c515422ce2a9a91fecf9f73c36bd77`; owner authorized merging after green/safe validation. Feature branch preserved.
